@@ -1,3 +1,2 @@
-# cp-server
-
-Find the API specification at [swagger.wckd.pk](https://swagger.wckd.pk/?url=https://raw.githubusercontent.com/ahad19n/cp-server/refs/heads/main/openapi.yaml)
+# ClickPrintBackend
+Find the API specification at [swagger.wckd.pk](https://swagger.wckd.pk/?url=https://raw.githubusercontent.com/ahad19n/ClickPrintBackend/refs/heads/main/docs/openapi.yaml)

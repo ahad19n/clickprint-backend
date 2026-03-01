@@ -30,4 +30,4 @@ services:
       NOTIFYBOT_URL: ${NOTIFYBOT_URL}
       GOTENBERG_URL: http://gotenberg:3000
       GOTENBERG_WEBHOOK_URL: http://app:3000
-      MONGODB_URI: mongodb://dev:dev@mongo/ClickPrint?authSource=admin
+      MONGODB_URI: mongodb://dev:dev@mongo/CPDev?authSource=admin
