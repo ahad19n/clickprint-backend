@@ -5,6 +5,8 @@ const User = require('../models/User.model');
 
 const { resp, isValidE164NoPlus, generateOtpCode } = require('../func');
 
+// -------------------------------------------------------------------------- //
+
 exports.generateOtp = async (req, res) => {
   const { number } = req.body || {};
 
@@ -26,7 +28,7 @@ exports.generateOtp = async (req, res) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        number,
+        chatId: `${number}@c.us`,
         message: `[ClickPrint] Your OTP is: ${code}`,
       })
     });
@@ -68,9 +70,6 @@ exports.verifyOtp = async (req, res) => {
     { upsert: true, new: true }
   );
 
-  const token = jwt.sign({ number }, process.env.JWT_SECRET);
-  return resp(res, 200, 'Successfully verified OTP', {
-    token,
-    profile: user
-  });
+  const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
+  return resp(res, 200, 'Verified OTP Successfully', { token, profile: user });
 };

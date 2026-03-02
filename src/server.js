@@ -35,11 +35,11 @@ for (const v of required) {
 // -------------------------------------------------------------------------- //
 
 mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('[INFO] Successfully connected to MongoDB'))
-  .catch(err => {
-    console.error('[ERROR] Failed to connect to MongoDB:', err);
-    process.exit(1);
-  });
+.then(() => console.log('[INFO] Successfully connected to MongoDB'))
+.catch(err => {
+  console.error('[ERROR] Failed to connect to MongoDB:', err);
+  process.exit(1);
+});
 
 // -------------------------------------------------------------------------- //
 
@@ -48,7 +48,8 @@ app.get('/health', async (req, res) => {
   try {
     await mongoose.connection.db.admin().ping();
     res.sendStatus(200);
-  } catch (err) {
+  }
+  catch (err) {
     console.error('[ERROR] Failed Health Check:', err);
     res.sendStatus(503);
   }

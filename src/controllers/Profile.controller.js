@@ -1,18 +1,24 @@
 const { resp } = require('../func');
 const User = require('../models/User.model');
 
+// -------------------------------------------------------------------------- //
+
 exports.fetchUserProfile = async (req, res) => {
-  const user = await User.findOne({ number: req.token.number });
-  return resp(res, 200, 'Fetched user profile successfully', { profile: user });
+  return resp(res, 200, 'Fetched Profile Successfully', {
+    profile: await User.findById(req.user._id)
+  });
 };
+
+// -------------------------------------------------------------------------- //
 
 exports.updateUserProfile = async (req, res) => {
   const { name } = req.body || {};
-  if (!name) return resp(res, 400, 'Missing or empty fields (name)');
+  if (!name) return resp(res, 400, 'Missing or invalid fields (name)');
 
-  const user = await User.findOne({ number: req.token.number });
-  user.name = name;
-  await user.save();
+  const user = await User.findByIdAndUpdate(req.user._id,
+    { name },
+    { new: true, runValidators: true }
+  );
 
-  return resp(res, 200, 'Updated user profile successfully', { profile: user });
+  return resp(res, 200, 'Updated Profile Successfully', { profile: user });
 };

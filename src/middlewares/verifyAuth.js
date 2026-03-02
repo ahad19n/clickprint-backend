@@ -26,7 +26,7 @@ module.exports = ({ type = 'any' } = {}) => {
 
       try {
         const payload = jwt.verify(credentials, process.env.JWT_SECRET);
-        req.token = payload;
+        req.user = payload;
         return next();  // success
       }
       catch (err) {
