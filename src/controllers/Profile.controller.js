@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
 
 // -------------------------------------------------------------------------- //
 
-router.post('/', async (req, res) => {
+router.patch('/', async (req, res) => {
   const { name } = req.body || {};
   if (!name) return resp(res, 400, 'Missing or invalid fields (name)');
 

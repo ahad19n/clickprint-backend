@@ -50,7 +50,7 @@ exports.gracefulShutdown = async (server) => {
 // -------------------------------------------------------------------------- //
 
 exports.sendViaNotifyBot = async (number, message) => {
-  return await fetch(process.env.NOTIFYBOT_URL, {
+  return await fetch(process.env.NOTIFYBOT_URI, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -60,4 +60,14 @@ exports.sendViaNotifyBot = async (number, message) => {
       message
     })
   });
+};
+
+// -------------------------------------------------------------------------- //
+
+exports.buildFormData = (fields) => {
+  const form = new FormData();
+  for (const [key, value] of Object.entries(fields)) {
+    form.append(key, typeof value === 'object' ? JSON.stringify(value) : value);
+  }
+  return form;
 };
