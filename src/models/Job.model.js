@@ -10,6 +10,7 @@ const settingsSchema = new mongoose.Schema({
   pagesPerSheet: { type: Number, required: true },
   numberOfCopies: { type: Number, required: true },
   pageSelection: { type: String, required: true },
+  sidedness: { type: String, required: true },
 }, { _id: false, versionKey: false, timestamps: false });
 
 module.exports = mongoose.model('Job', new mongoose.Schema({

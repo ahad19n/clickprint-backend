@@ -21,6 +21,7 @@ function validateSettingsObject(s) {
   if (typeof s.pageType !== 'string' || s.pageType.trim() === '') return { valid: false, error: 'pageType must be a non-empty string' };
   if (!Number.isInteger(s.numberOfCopies) || s.numberOfCopies < 1) return { valid: false, error: 'numberOfCopies must be a positive integer' };
   if (!['portrait', 'landscape'].includes(s.orientation)) return { valid: false, error: 'orientation must be one of ["portrait", "landscape"]' };
+  if (!['single', 'double'].includes(s.sidedness)) return { valid: false, error: 'sidedness must be one of ["single", "double"]' };
   if (typeof s.pageSelection !== 'string' || !validatePageSelection(s.pageSelection)) return { valid: false, error: 'pageSelection must be a valid selection string' };
   if (!Number.isInteger(s.pagesPerSheet) || ![1, 2, 4, 8, 16].includes(s.pagesPerSheet)) return { valid: false, error: 'pagesPerSheet must be one of [1, 2, 4, 8, 16]' };
 
@@ -50,7 +51,7 @@ router.post('/', async (req, res) => {
   }
 
   for (const [index, file] of files.entries()) {
-    if (!file.hash || !await File.findOne({ hash: file.hash })) {
+    if (!file.hash || !await File.findOne({ fileId: file.hash })) {
       return resp(res, 400, `Missing or invalid fields (file[${index}].hash)`);
     }
 
