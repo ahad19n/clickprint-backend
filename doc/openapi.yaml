@@ -427,7 +427,7 @@ paths:
                 invalidSettings:
                   value:
                     success: false
-                    message: file[0]: pagesPerSheet must be one of [1, 2, 4, 8, 16]
+                    message: file[0] pagesPerSheet must be one of [1, 2, 4, 8, 16]
                     data: {}
         '401':
           $ref: '#/components/responses/UnauthorizedResponse'
