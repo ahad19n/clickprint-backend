@@ -2,7 +2,7 @@ const morgan = require('morgan');
 const express = require('express');
 const mongoose = require('mongoose');
 
-const { resp, gracefulShutdown } = require('./func');
+const { resp } = require('./func');
 
 // -------------------------------------------------------------------------- //
 
@@ -83,6 +83,27 @@ const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
   console.log('[INFO] Server listening on port', PORT);
 });
+
+// -------------------------------------------------------------------------- //
+
+const gracefulShutdown = async (server) => {
+  try {
+    console.log('[INFO] Attempting to gracefully shut down server');
+
+    await new Promise((resolve, reject) => {
+      server.close((err) => (err ? reject(err) : resolve()));
+    });
+    console.log('[INFO] Successfully shutdown server');
+
+    await mongoose.connection.close();
+    console.log('[INFO] Successfully closed MongoDB connection');
+
+    process.exit(0);
+  } catch (err) {
+    console.error('[ERROR] Error during server shutdown:', err);
+    process.exit(1);
+  }
+};
 
 process.on('SIGINT', () => gracefulShutdown(server));
 process.on('SIGTERM', () => gracefulShutdown(server));

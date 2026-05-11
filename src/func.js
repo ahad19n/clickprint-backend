@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const mongoose = require('mongoose');
 const { randomInt } = require('crypto');
 
 // -------------------------------------------------------------------------- //
@@ -30,27 +29,6 @@ exports.generateOtpCode = (length) => {
     otp += randomInt(0, 10);
   return otp;
 }
-
-// -------------------------------------------------------------------------- //
-
-exports.gracefulShutdown = async (server) => {
-  try {
-    console.log('[INFO] Attempting to gracefully shut down server');
-
-    await new Promise((resolve, reject) => {
-      server.close((err) => (err ? reject(err) : resolve()));
-    });
-    console.log('[INFO] Successfully shutdown server');
-
-    await mongoose.connection.close();
-    console.log('[INFO] Successfully closed MongoDB connection');
-
-    process.exit(0);
-  } catch (err) {
-    console.error('[ERROR] Error during server shutdown:', err);
-    process.exit(1);
-  }
-};
 
 // -------------------------------------------------------------------------- //
 
